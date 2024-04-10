@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { Formik } from "formik";
-import { nanoid } from "nanoid";
+import { useState, useEffect } from "react";
+
 import ContactForm from "./components/ContactForm/ContactForm";
 import SearchBox from "./components/SearchBox/SearchBox";
 import ContactList from "./components/ContactList/ContactList";
@@ -14,16 +13,37 @@ function App() {
     { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
   ];
 
-  const [contact, setContact] = useState(contaktBegin);
+  const [contacts, setContacts] = useState(() => {
+    const storageData = JSON.parse(localStorage.getItem("dataContacts"));
+    return storageData || contaktBegin;
+  });
 
-  /* const contacts = () => {}; */
+  const deleteContact = (contactId) => {
+    const newContacts = contacts.filter((contact) => {
+      return contact.id !== contactId;
+    });
+    setContacts(newContacts);
+  };
+  useEffect(() => {
+    localStorage.setItem("dataContacts", JSON.stringify(contacts));
+  }, [contacts]);
+  const [filterContact, setFilterContact] = useState("");
+  const filteredContacts = contacts.filter((contact) => {
+    return contact.name.toLowerCase().includes(filterContact.toLowerCase());
+  });
+  const addContact = (newContact) => {
+    setContacts([...contacts, newContact]);
+  };
 
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm />
-      <SearchBox />
-      <ContactList contactList={contact} />
+      <ContactForm addContact={addContact} />
+      <SearchBox
+        filterContact={filterContact}
+        setFilterContact={setFilterContact}
+      />
+      <ContactList contacts={filteredContacts} onDelete={deleteContact} />
     </div>
   );
 }
