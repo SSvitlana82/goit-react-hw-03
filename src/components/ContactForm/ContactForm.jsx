@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { nanoid } from "nanoid";
 import { object, string } from "yup";
+import style from "./ContactForm.module.css";
 
 const ContactForm = ({ addContact }) => {
   const contactSchema = object({
@@ -23,18 +24,33 @@ const ContactForm = ({ addContact }) => {
         validationSchema={contactSchema}
         onSubmit={handleSubmit}
       >
-        <Form>
-          <label>
-            Name
-            <Field type="text" name="name"></Field>
-            <ErrorMessage component="span" name="name"></ErrorMessage>
+        <Form className={style.submitForm}>
+          <label className={style.label}>
+            <span className={style.spanUser}>Name</span>
+            <div className={style.fieldContainer}>
+              <Field type="text" name="name" className={style.field}></Field>
+              <ErrorMessage
+                component="span"
+                name="name"
+                className={style.error}
+              ></ErrorMessage>
+            </div>
           </label>
-          <label>
-            Number
-            <Field type="text" name="number"></Field>
-            <ErrorMessage component="span" name="number"></ErrorMessage>
+          <label className={style.label}>
+            {" "}
+            <span className={style.spanUser}>Number</span>
+            <div className={style.fieldContainer}>
+              <Field type="text" name="number" className={style.field}></Field>
+              <ErrorMessage
+                component="span"
+                name="number"
+                className={style.error}
+              ></ErrorMessage>
+            </div>
           </label>
-          <button type="submit">Add contact</button>
+          <button type="submit" className={style.btn}>
+            Add contact
+          </button>
         </Form>
       </Formik>
     </div>
