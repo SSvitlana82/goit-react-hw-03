@@ -9,7 +9,7 @@ const ContactForm = ({ addContact }) => {
     number: string()
       .min(3, "Too Short")
       .max(50, "Too much")
-      .matches(/\d{3}-\d{2}-\d{2}/, "Invalid number")
+
       .required(),
   });
   const handleSubmit = (values, options) => {
