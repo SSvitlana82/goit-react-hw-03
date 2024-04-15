@@ -40,7 +40,12 @@ const ContactForm = ({ addContact }) => {
             {" "}
             <span className={style.spanUser}>Number</span>
             <div className={style.fieldContainer}>
-              <Field type="text" name="number" className={style.field}></Field>
+              <Field
+                type="text"
+                name="number"
+                className={style.field}
+                placeholder="format xxx-xx-xx"
+              ></Field>
               <ErrorMessage
                 component="span"
                 name="number"
